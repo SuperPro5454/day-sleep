@@ -109,8 +109,7 @@ public abstract class PlayerMixin extends LivingEntity {
 			}
 		}
 
-		int i = 29999999;
-		double d = MathHelper.clamp(this.getX(), -2.9999999E7, 2.9999999E7);
+        double d = MathHelper.clamp(this.getX(), -2.9999999E7, 2.9999999E7);
 		double e = MathHelper.clamp(this.getZ(), -2.9999999E7, 2.9999999E7);
 		if (d != this.getX() || e != this.getZ()) {
 			this.setPosition(d, this.getY(), e);

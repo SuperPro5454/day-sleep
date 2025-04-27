@@ -17,6 +17,9 @@
 	"entrypoints": {
 		"main": [
 			"net.superpro.DaySleep"
+		],
+		"modmenu": [
+			"net.superpro.ModMenuIntegration"
 		]
 	},
 	"mixins": [
@@ -26,7 +29,7 @@
 		"fabricloader": ">=0.16.13",
 		"minecraft": "~1.21.4",
 		"java": ">=21",
-		"fabric-api": "*"
+		"yet_another_config_lib_v3": ">=3.6.6+1.21.4-neoforge"
 	},
 	"suggests": {
 		"another-mod": "*"

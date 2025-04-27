@@ -25,6 +25,7 @@ import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.tick.TickManager;
 import net.minecraft.world.tick.WorldTickScheduler;
 import net.superpro.BedTickInfo;
+import net.superpro.ModMenuIntegration;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -92,7 +93,7 @@ public abstract class ServerWorldMixin extends World {
 
 	@Inject(at = @At("HEAD"), method = "tick", cancellable = true)
 	private void tick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
-		for (int repete = 1; repete <= (BedTickInfo.isSpeeding ? 4 : 1); repete++) {
+		for (int repete = 1; repete <= (BedTickInfo.isSpeeding ? ModMenuIntegration.gameSpeedMultiplier : 1); repete++) {
 			Profiler profiler = Profilers.get();
 			this.inBlockTick = true;
 			TickManager tickManager = this.getTickManager();
@@ -147,7 +148,7 @@ public abstract class ServerWorldMixin extends World {
 
 			profiler.swap("raid");
 			if (bl) {
-				this.raidManager.tick((ServerWorld) (Object) this);
+				this.raidManager.tick();
 			}
 
 			profiler.swap("chunkSource");
@@ -178,7 +179,7 @@ public abstract class ServerWorldMixin extends World {
 							profiler.push("checkDespawn");
 							entity.checkDespawn();
 							profiler.pop();
-							if (entity instanceof ServerPlayerEntity || this.chunkManager.chunkLoadingManager.getLevelManager().shouldTickEntities(entity.getChunkPos().toLong())) {
+							if (entity instanceof ServerPlayerEntity || this.chunkManager.chunkLoadingManager.getTicketManager().shouldTickEntities(entity.getChunkPos().toLong())) {
 								Entity entity2 = entity.getVehicle();
 								if (entity2 != null) {
 									if (!entity2.isRemoved() && entity2.hasPassenger(entity)) {
